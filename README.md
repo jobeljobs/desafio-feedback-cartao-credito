@@ -38,3 +38,9 @@ Por isso, o protótipo ainda precisa de melhorias antes de ser utilizado em situ
 
 ## Conclusão
 O CardFeedback AI demonstra como ferramentas de automação e inteligência artificial podem apoiar a análise de feedbacks de clientes. O projeto constitui um protótipo funcional para fins de aprendizado e demonstração.
+
+## Evidência do protótipo em funcionamento
+
+A imagem abaixo registra um teste do CardFeedback AI no n8n, demonstrando a análise de um feedback de cliente sobre cartão de crédito.
+
+![Evidência do teste de cobrança duplicada](evidencia-teste-cobranca.png)
