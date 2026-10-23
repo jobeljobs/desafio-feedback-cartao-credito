@@ -1,0 +1,88 @@
+{
+  "name": "CardFeedback AI",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        -448,
+        -416
+      ],
+      "id": "e73b8292-935a-4545-8439-07f7e707841a",
+      "name": "When chat message received",
+      "webhookId": "a37bbbde-dd46-49f3-a7e9-380498e05206"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Analise o feedback abaixo e responda de forma breve e objetiva.\n\nFeedback do cliente:\n{{ $json.chatInput }}\n\nClassifique usando exatamente estas cinco linhas:\nSentimento: Positivo, Negativo ou Neutro\nTema: Bloqueio de cartão, Cobrança indevida, Limite, Atendimento, Aplicativo, Segurança ou Outro\nPrioridade: Alta, Média ou Baixa\nResumo: descreva o problema em uma frase curta\nAção sugerida: indique uma ação para a equipe responsável em uma frase curta\n\nNão dê conselhos diretamente ao cliente.\nNão invente nomes de bancos, lojas ou informações ausentes.\nNão escreva introduções, listas numeradas ou explicações adicionais.",
+        "messages": {
+          "messageValues": [
+            {
+              "message": "Você é o CardFeedback AI. Analise o feedback do cliente e responda somente com estas 5 linhas, sem introdução:  Sentimento: Positivo, Negativo ou Neutro Tema: Bloqueio de cartão, Cobrança indevida, Limite, Atendimento, Aplicativo, Segurança ou Outro Prioridade: Alta, Média ou Baixa Resumo: uma frase curta Ação sugerida: uma frase curta para a equipe  Seja objetivo. Não dê conselhos diretamente ao cliente. Não invente informações. Analise somente o texto recebido. Nunca presuma o nome do banco, da loja ou do cartão se isso não estiver escrito. Responda apenas com as cinco linhas solicitadas, sem conselhos adicionais."
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        -240,
+        -544
+      ],
+      "id": "c8b3b8e0-b85e-432b-8193-e2bfd18e9604",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "qwen2.5:1.5b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmOllama",
+      "typeVersion": 1,
+      "position": [
+        32,
+        -432
+      ],
+      "id": "722e51c6-d8e9-4d0c-a1cc-9a679c74656e",
+      "name": "Ollama Model"
+    }
+  ],
+  "connections": {
+    "Ollama Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  }
+}
